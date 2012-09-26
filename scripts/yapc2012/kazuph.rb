@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# coding : utf-8
 t = Time.now
 max = 10000
 def prime?(num, ary)
