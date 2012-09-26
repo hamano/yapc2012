@@ -2,7 +2,8 @@ class ScriptsController < ApplicationController
   # GET /scripts
   # GET /scripts.json
   def index
-    @dirs = Script::dirs
+    redirect_to '/dir/yapc2012'
+    #@dirs = Script::dirs
   end
 
   def dir
