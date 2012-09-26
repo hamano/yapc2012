@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-t = Time.now
 max = 10000
 def prime?(num, ary)
   ary.each do |n|
@@ -22,4 +21,3 @@ while  prime_ary.count < max
   end
 end
 p prime_ary.inject(:+)
-p Time.now - t
