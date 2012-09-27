@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime war in Yapc::Asia2012 [ガイアックス × CodeIQ]</title>
+    <title>Yapc::Asia2012::素数戦争 [GaiaX × CodeIQ]</title>
     <%= csrf_meta_tags %>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -33,28 +33,30 @@
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'images/favicon.ico', :rel => 'shortcut icon' %>
+    <style class="cssreations">
+      .ascii {
+        white-space: pre;
+        font-family: monospace;
+        color: #b5e853;
+        font-size: 10px;
+        line-height: 52%;
+        margin-bottom: 30px;
+      }
+      .marketing {
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/">Prime war in Yapc::Asia2012 [ガイアックス × CodeIQ]</a>
+        <div class="container">
+          <a class="brand" href="/">Yapc::Asia::PrimeWars GaiaX × CodeIQ</a>
         </div>
       </div>
     </div>
-
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span12">
+    <div class="container">
           <%= yield %>
-        </div>
-      </div><!--/row-->
 
       <footer>
       <p><a href="http://gx-hackers.github.com/studio-256bit/" target="_blank">&copy; GaiaX Studio 256bit</a></p>
