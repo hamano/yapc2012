@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 max = 10000
 def prime?(num, ary)
   ary.each do |n|
