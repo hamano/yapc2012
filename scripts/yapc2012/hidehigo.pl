@@ -28,14 +28,9 @@ sub next_prime_candidate {
 sub is_prime {
   my $n = shift;
   foreach my $p (@primes) {
-    last if $p * $p > $n;
+    return 1 if $p * $p > $n;
     $loop_cnt ++;
     return 0 unless $n % $p;
-  }
-  for (my $i = $primes[-1]; $i < $n; $i ++) {
-    $loop_cnt2 ++;
-    return 1 if $i * $i > $n;
-    return 0 unless $n % $i;
   }
   return 0;
 }
