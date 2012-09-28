@@ -1,8 +1,8 @@
-#!/usr/bin/env perl
-#my @primes;
-#my ($cnt, $sum) = (0, 0);
+# use strict;
+# use warnings;
+# をつけましょう
 my $i = 2;
-my $max = shift || 10000;
+my $max = 10000;
 
 while( $cnt < $max ) {
     my $flag;
