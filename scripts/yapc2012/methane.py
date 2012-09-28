@@ -1,22 +1,29 @@
 #!/usr/bin/env python -S
-def main():
-    P = [2]
-    add = P.append
-    l = 1
+MAX_NUM = 105000
 
+def main():
+    L = bytearray(MAX_NUM)
+    F = b'1' * MAX_NUM
+    S = 2
     i = 3
-    while l < 10000:
-        x = i ** 0.5
-        for p in P:
-            if p > x:
-                add(i)
-                l += 1
-                #print l, i, s
-                break
-            if i % p == 0:
-                break
-        i += 2
-    return sum(P)
+    l = 1
+    L[::2] = F[::2]
+
+    for i in xrange(3, MAX_NUM, 2):
+        if l >= 10000:
+            break
+        if L[i]:
+            continue
+        S += i
+        L[::i] = F[::i]
+        l += 1
+
+    return S
+
+#import sys
+#if 'bench' in sys.argv:
+#    assert 496165411 == main()
+#    import timeit
+#    print timeit.timeit(main, number=100)
 
 print main()
-
