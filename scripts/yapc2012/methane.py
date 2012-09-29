@@ -7,23 +7,20 @@ def main(N):
         return sum([2,3,5][:N])
 
     # http://ja.wikipedia.org/wiki/素数定理
+    # N 個目の素数 < MAX_NUM が証明されてる
     MAX_NUM = int(N*log(N) + N*log(log(N)) + 1)
 
     L = bytearray(MAX_NUM)
     F = b'1' * MAX_NUM
     S = 2
-    i = 3
-    l = 1
+    i = 2
     L[::2] = F[::2]
+    next = L.find
 
-    for i in xrange(3, MAX_NUM, 2):
-        if l >= N:
-            break
-        if L[i]:
-            continue
+    for _ in xrange(N-1):
+        i = next(b'\x00', i)
         S += i
         L[::i] = F[::i]
-        l += 1
 
     return S
 
@@ -34,3 +31,4 @@ def main(N):
 #    print timeit.timeit(lambda: main(10000), number=100)
 
 print main(10000)
+
