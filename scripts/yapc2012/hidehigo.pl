@@ -26,7 +26,8 @@ sub is_prime {
 }
 
 my $i = 0;
-while (@primes < 10000) {
+my $ele = @primes;
+while ($ele < 10000) {
   #$loop_cnt3 ++;
   $i += 30;
   foreach my $rest (@rests) {
@@ -39,6 +40,7 @@ while (@primes < 10000) {
       if ( $p > $sqrtn ) { # prime
         push(@primes, $n);
         $sum += $n;
+        $ele++;
         last;
       }
       last if $n % $p == 0; # not prime
