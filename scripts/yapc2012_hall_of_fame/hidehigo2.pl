@@ -48,7 +48,7 @@ sub pow {
 }
 
 my $i = 0;
-while (@primes < 30000) {
+while (@primes < 50000) {
   #$loop_cnt3 ++;
   $i += 30;
   foreach my $rest (@rests) {
