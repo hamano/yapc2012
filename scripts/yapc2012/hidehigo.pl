@@ -18,7 +18,7 @@ sub is_prime {
   my $n = shift;
   my $sqrtn = int(sqrt($n));
   foreach my $p (@primes) {
-    #$loop_cnt ++;
+    $loop_cnt ++;
     return 1 if $p > $sqrtn;
     return 0 unless $n % $p;
   }
@@ -31,9 +31,17 @@ while (@primes < 10000) {
   $i += 30;
   foreach my $rest (@rests) {
     my $n = $i + $rest;
-    if ( is_prime($n) ) {
-      push(@primes, $n);
-      $sum += $n;
+    my $sqrtn = int(sqrt($n));
+    
+    # prime判定を埋め込み
+    foreach my $p (@primes) {
+      #$loop_cnt ++;
+      if ( $p > $sqrtn ) { # prime
+        push(@primes, $n);
+        $sum += $n;
+        last;
+      }
+      last if $n % $p == 0; # not prime
     }
   }
   #print "next:".$n."\n";
