@@ -15,7 +15,7 @@ sub sum_primes {
             return $sum_of_primes if $num > $MAX_PRIME_NUM;
             $sum_of_primes += $num;
 
-            # 素数の倍数はもういらないので判定ついでに落とす
+            # ふるい用
             my $multi = $num * $num;
             while ( $multi <= $MAX_PRIME_NUM ) {
                 $table[$multi]++;
@@ -26,3 +26,4 @@ sub sum_primes {
 }
 
 print sum_primes();
+
