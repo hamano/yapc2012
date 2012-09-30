@@ -3,27 +3,27 @@
 var primeSum = function(nth) {
     if (nth <= 5) throw new RangeError();
 
-    var primes = new Array(nth);
-    primes.splice(0, 5,  2, 3, 5, 7, 11);
-    var count = 5;
-    var sum = 28;
-outer:
-    for (var p = primes[count - 1] + 2; ; p += 2) {
-        var q;
-        for (var i = 1; (q = primes[i]), q * q <= p; i++) {
-            if (p % q == 0)
-                continue outer;
-        }
-        primes[count] = p;
+    var sieveSize = Math.floor(nth * Math.log(nth) + nth * Math.log(Math.log(nth)) / 2);
+    var sieve = new Array(sieveSize);  // sieve[i] is for 2*i+1
+    var count = 1;
+    var sum = 2;
+    var p;
+    var q = 1;
+    while (true) {
+        while(sieve[q])
+            q++;
+        p = 2 * q + 1;
+        //console.log(p);
         count++;
         sum += p;
         if (count >= nth)
-            break;
+            return sum;
+        for (var i = q; i < sieveSize; i += p)
+            sieve[i] = true;
     }
-
-    return sum;
 }
 
-var result = primeSum(10000);
+var nth = process.argv.length > 2 ? Number(process.argv[2]) : 10000;
+var result = primeSum(nth);
 console.log(result);
 
