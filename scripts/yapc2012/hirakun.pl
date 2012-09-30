@@ -32,4 +32,3 @@ for (my $i = 30; @sosu < 10000; $i +=30) {
     }
 }
 print $total . "\n";
-exit;
