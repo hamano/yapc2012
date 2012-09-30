@@ -9,10 +9,8 @@ var primeSum = function(nth) {
     var sum = 28;
 outer:
     for (var p = primes[count - 1] + 2; ; p += 2) {
-        for (var i = 0; i < count; i++) {
-            var q = primes[i];
-            if (q * q > p)
-                break;
+        var q;
+        for (var i = 1; (q = primes[i]), q * q <= p; i++) {
             if (p % q == 0)
                 continue outer;
         }
@@ -28,3 +26,4 @@ outer:
 
 var result = primeSum(10000);
 console.log(result);
+
