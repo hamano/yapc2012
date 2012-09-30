@@ -21,5 +21,4 @@ function is_prime($n){
     }
     return $n;
 }
-?>
 
