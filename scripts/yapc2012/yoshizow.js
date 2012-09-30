@@ -23,7 +23,7 @@ var primeSum = function(nth) {
     }
 }
 
-var nth = process.argv.length > 2 ? Number(process.argv[2]) : 10000;
+//var nth = process.argv.length > 2 ? Number(process.argv[2]) : 10000;
+var nth = 10000;
 var result = primeSum(nth);
 console.log(result);
-
