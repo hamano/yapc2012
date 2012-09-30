@@ -46,5 +46,4 @@ for (@sosu) {
   $total += $_;
 }
 print $total . "\n";
-exit;
 
