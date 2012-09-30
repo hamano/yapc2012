@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-# coding : utf-8
 PNUM = 10000
 
 #from Prime number theorem
@@ -8,16 +6,68 @@ FLAGS_SIZE = 16
 FLAGS_NUM = MAXNUM / FLAGS_SIZE + 1
 
 def ffs(n)
-  n |= (n << 1)
-  n |= (n << 2)
-  n |= (n << 4)
-  n |= (n << 8)
-  n = ~n
-  n -= ((n >> 1) & 0x5555)
-  n = (n & 0x3333) + ((n >> 2) & 0x3333)
-  n = (n + (n >> 4)) & 0x0f0f
-  n *= 0x0101
-  n >> 8 & 15
+  n = n & (-n)
+  if n > 256 then
+    if n > 2048 then
+      if n > 8192 then
+        if n == 16384 then
+          14
+        else
+          15
+        end
+      else
+        if n == 8192 then
+          13
+        else
+          12
+        end
+      end
+    else
+      if n > 1024 then
+        11
+      else
+        if n == 1024 then
+          10
+        else
+          9
+        end
+      end
+    end
+  else
+    if n > 16
+      if n > 64
+        if n == 128 then
+          7
+        else
+          8
+        end
+      else
+        if n == 64 then
+          6
+        else
+          5
+        end
+      end
+    else
+      if n > 4
+        if n == 16 then
+          4
+        else
+          3
+        end
+      else
+        if n == 4 then
+          2
+        else
+          if n == 2 then
+            1
+          else
+            0
+          end
+        end
+      end
+    end
+  end
 end
 
 def main
@@ -32,14 +82,14 @@ def main
     flg[i + 2] |= 0b0010010010010010
     i = i + 3
   end
-
+  
   curnum = 0
   while !(pno == PNUM)
     while !((lf = flg[curnum]) == 0xffff)
-      off = ffs(~lf)
-
+      off = ffs(~lf) 
+      
       lcn = (curnum << 4 ) + off
-
+      
       flg[curnum] |= (1 << off)
       if lcn < 320 then
         cn = lcn * lcn
@@ -48,18 +98,19 @@ def main
           unless cn % 3 == 0 then
             flg[cn >> 4] |= 1 << (cn & 0xf)
           end
-          cn += stp1
+          cn += stp1 
         end
       end
-
+      
       add += lcn
       pno += 1
     end
-
+    
     curnum += 1
   end
-
+  
   p add
 end
-
+    
 main
+
