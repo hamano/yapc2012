@@ -3,11 +3,21 @@ use warnings;
 
 use List::Util qw(sum);
 
-my @primexs = ();
-my $num = 1;
+my $max_num = 10000;
+my @primexs = (2, 3);
 
-p_counter : while ( @primexs < 10000 ) {
-    $num >= 3 ? $num += 2 : $num++;
+if ( $max_num == 1 ) {
+    print 2;
+    exit;
+}
+if ( $max_num == 2 ) {
+    print 5;
+    exit;
+}
+
+my $num = 3;
+p_counter : while ( @primexs < $max_num ) {
+    $num += 2;
     my $num_sqrt = sqrt $num;
     for my $primex ( @primexs ) {
         last if $primex > $num_sqrt;
@@ -17,7 +27,6 @@ p_counter : while ( @primexs < 10000 ) {
 }
 
 print sum( @primexs );
-print "\n";
 
 1;
 
