@@ -73,8 +73,8 @@ end
 def main
   flg = Array.new(FLAGS_NUM, 0b0101010101010101)
   flg[0] |= 7
-  pno = 2
-  add = 2 + 3
+  pno = 3
+  add = 2 + 3 + 5
   i = 0
   while i < FLAGS_NUM
     flg[i] |= 0b1001001001001001
@@ -82,23 +82,87 @@ def main
     flg[i + 2] |= 0b0010010010010010
     i = i + 3
   end
+
+  i = 0
+  while i < FLAGS_NUM
+    flg[i] |= 0b1000010000100001
+    flg[i + 1] |= 0b0100001000010000
+    flg[i + 2] |= 0b0010000100001000
+    flg[i + 3] |= 0b0001000010000100
+    flg[i + 4] |= 0b0000100001000010
+    i = i + 5
+  end
   
   curnum = 0
   while !(pno == PNUM)
     while !((lf = flg[curnum]) == 0xffff)
       off = ffs(~lf) 
-      
       lcn = (curnum << 4 ) + off
-      
       flg[curnum] |= (1 << off)
+
       if lcn < 320 then
         cn = lcn * lcn
         stp1 = lcn * 2
         while cn < MAXNUM
-          unless cn % 3 == 0 then
+          if cn % 15 == 0 then
+            while cn < MAXNUM
+              # 0
+              cn += stp1 
+
+              # 1
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+
+              # 2
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+
+              # 3
+              cn += stp1 
+
+              # 4
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+
+              # 5
+              cn += stp1 
+
+              # 6
+              cn += stp1 
+
+              # 7
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+
+              # 8
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+
+              # 9
+              cn += stp1 
+
+              # 10
+              cn += stp1 
+
+              # 11
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+
+              # 12
+              cn += stp1 
+
+              # 13
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+
+              # 14
+              flg[cn >> 4] |= 1 << (cn & 0xf)
+              cn += stp1 
+            end
+          else
             flg[cn >> 4] |= 1 << (cn & 0xf)
+            cn += stp1 
           end
-          cn += stp1 
         end
       end
       
@@ -113,4 +177,5 @@ def main
 end
     
 main
+
 
