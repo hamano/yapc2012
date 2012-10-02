@@ -18,7 +18,6 @@ while($cnt != $max_count) {
 
 print($sum."\n");
 printf("%0.5f",Time::HiRes::time - $start); 
-exit;
 
 
 sub IsPrime() {
