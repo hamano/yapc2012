@@ -1,38 +1,27 @@
 use strict;
 use warnings;
+use List::Util qw/sum/;
 
-my ($count,$sum) = (0,0);
+my @primes = (2,3,5);
+my ($add,$add2) = (4,2);
+our ($i,$j) = (7,0);
+my $root = 0;
 
-for ( 2,3,5 ) {
-    $count++;
-    $sum += $_;
+while ( @primes < 10000 ) {
+    $root = int(sqrt $i);
+    push @primes, $i if is_prime();
+    $i += $add;
+    ( $add, $add2 ) = ( $add2, $add );
 }
-
-($a,$b) = (4,2);
-
-my $i = 7;
-while ( $count < 10000 ) {
-    if ( is_prime($i) ) {
-        $count++;
-        $sum += $i;
-    }
-
-    $i += $a;
-    ( $a, $b ) = ( $b, $a );
-}
-
-print $sum;
 
 sub is_prime {
-    my $i = shift;
-
-    my $root = int(sqrt $i);
-
-    for ( my $j = 3; $j <= $root; $j += 2 ) {
+    for $j ( @primes ) {
+        return 1 if $root < $j;
         next if ( $i % $j );
         return 0 if $i != $j;
     }
-
     return 1;
 }
+
+print sum @primes;
 
