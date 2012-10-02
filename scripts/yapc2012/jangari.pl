@@ -1,14 +1,11 @@
 #!/usr/bin/perl
-use strict;
 
 my @list = (2);
-my $max = 10000;
-my $sum = 0;
-my $count = 0;
+my ($max, $sum, $count) = (10000, 0, 0);
 
 for(my $i = 2; $count < $max; $i++){
   foreach(@list){
-    if($_ > sqrt($i)){
+    if($_ * $_ > $i){
       $count++;
       push @list, $i;
       $sum += $i;
@@ -19,6 +16,5 @@ for(my $i = 2; $count < $max; $i++){
     }
   }
 }
-
 print $sum;
 
