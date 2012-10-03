@@ -1,32 +1,28 @@
-var sumPrimeNumber = function(n) {
-  var logn = Math.log(n);
-  var pn = ~~Math.sqrt(n * logn + n * Math.log(logn))
+/*
+ * - p{N} notes Nth prime number
+ * The p{N} should be approximated by N * log(N) + N * log(log(N))
+ * The variable of block means a size of buffer to use sieve (divided by 2)
+ * The variable of trial means trial division for less computing
+ */
+
+(function(n) {
+  var log_n = Math.log(n)
+    , pn = n * log_n + n * Math.log(log_n)
+    , block = pn >> 1
+    , trial = ~~(Math.sqrt(pn))
+    , buf = new Buffer(block)
     , sum = 2
-    , q = 1
-    , p = []
-    , len = 0
-    , k = 0
+    , p = 1
+    , q = 0
+    , count = 1
     ;
-  LOOP1: while (pn > q) {
-    q += 2;
-    k = 0;
-    while(k < len)
-      if (q % p[k++] == 0)
-        continue LOOP1;
-    sum += q;
-    p[len++] = q;
+  buf.fill(0x00);
+  while (count++ < n) {
+    while(buf[++q]);
+    sum += p = (q << 1) + 1;
+    for (var i = q; q < trial && i < block; i += p)
+      buf[i] = 0xFF;
   }
-  var count = len + 1;
-  LOOP2: while (n > count) {
-    q += 2;
-    k = 0;
-    while(k < len)
-      if (q % p[k++] == 0)
-        continue LOOP2;
-    sum += q;
-    count++;
-  }
-  return sum;
-}
-console.log(sumPrimeNumber(10000));
+  console.log(sum);
+})(10000);
 
