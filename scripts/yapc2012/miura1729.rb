@@ -143,9 +143,10 @@ def main
   end
 
   while pno < PNUM
-    while (lf = flg[base]) < 0xffff
-      flg[base] |= (1 + lf)
+    lf = flg[base]
+    while lf < 0xffff
       add += (base << 4 ) + ffs(~lf) 
+      lf |= (1 + lf)
       pno += 1
     end
     base += 1
