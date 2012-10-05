@@ -6,7 +6,7 @@ use warnings;
 my @p = (2 .. 104729);
 
 my $i = 0;
-while($i < int(sqrt(scalar(@p)))){
+while($p[$i] < int(sqrt($p[scalar(@p)-1]))){
         @p = grep{$_ % $p[$i] != 0 || $_ == $p[$i]} @p;
         $i++
 }
@@ -14,6 +14,5 @@ while($i < int(sqrt(scalar(@p)))){
 my $sum = 0;
 $sum += $_ for (@p);
 
-print "Answer:" . $sum . "\n";
-
+print $sum . "\n";
 

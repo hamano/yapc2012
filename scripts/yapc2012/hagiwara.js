@@ -1,14 +1,13 @@
+//ジャッパスクリプト(最新)
 //
-//6n+-1付近のみを探索すると
+//素数表の読み書きが予想外に重いので速くしてみた
 //
-//1. 2と3の倍数は6n+-1とは重ならない
-//2. 6n+-1の6k+-1倍のみ「素数でない」フラグを立てればいい
-//
-//もうちょっとだけ速くなるんじゃよ
+//なぜか時々5回に数回くらいの割合で速度が10分の１になるorz
+
 
 function sum_primes(prime_number){
   if(prime_number <= 5){
-    var primes = [2,3,7,11,13];
+    var primes = [2,3,5,7,11];
     var sum = 0;
     for(var i = 0; i < prime_number;i++){
       sum = sum + primes[i];
@@ -21,88 +20,97 @@ function sum_primes(prime_number){
   
   var ln_pn = Math.log(prime_number);
   
-  var max_canditate = Math.floor(prime_number * (ln_pn + (Math.log(ln_pn))));
+  var max_canditate = Math.floor(prime_number * (ln_pn + (Math.log(ln_pn)))/3);
   var numbers = new Buffer(max_canditate);
   numbers.fill(1);
   var sum = 5;
-  var base = 0;
+  var step = 0;
+  var index = -1;
   var tick_number = 0;
-  var estep_base      = 0;
   var unflag_index   = 0;
-  var is_prime_m = 1,is_prime_p = 1,index_m = 0,index_p = 0;
-  var break_flag = false;
+  var is_prime = 10;
+  
   prime_number = prime_number -2;
   
 
   while(true){
-    base = base + 6;
-    index_m = base - 1;
-      index_p = base + 1;
-  
-  
-    is_prime_m = numbers[index_m];
-    if(is_prime_m === 1){
+    step ++;
+    index ++;
+    is_prime = numbers[index];
+    if(is_prime === 1){
       
-      sum = sum + index_m;
+      sum = sum + step * 6 -1 ;
       
       prime_number --;
       if(prime_number === 0){
         return sum;
         
       }
-      estep_base = 0;
+      tick_number = 0;
+      
       while(true){
-        estep_base  = estep_base + 6;
-      
-        cut_index = (estep_base -1 ) * index_m  ;
-        if(cut_index > max_canditate){
-            break;
         
-        }
-        numbers[cut_index] = 0;
-      
-        cut_index = (estep_base + 1 ) * index_m  ;
-        if(cut_index > max_canditate){
-      
-            break;
-        
-        }
-        numbers[cut_index] = 0;
-      }
-    }
+        tick_number ++;
 
-    is_prime_p = numbers[index_p];
-    if (is_prime_p === 1){
       
-      sum = sum + index_p;
+        unflag_index = (step * (6*tick_number - 1) - tick_number ) * 2 - 1  ;
+        
+        if(unflag_index > max_canditate){
+      
+          break;
+        
+        }
+        numbers[unflag_index] = 0;
+        
+        unflag_index =(step * (6*tick_number + 1) - tick_number) * 2  - 2 ;
+        
+        if(unflag_index > max_canditate){
+          break;            
+        }
+        numbers[unflag_index] = 0;
+      }
+    }
+    
+    index ++;
+    is_prime = numbers[index];
+    if(is_prime === 1){
+      sum = sum + step * 6 + 1 ;
+      
       prime_number --;
+      
       if(prime_number === 0){
         return sum;
         
       }
-      estep_base  = 0
+      
+      tick_number = 0;
+      break_flag = false;
       while(true){
-        estep_base  = estep_base + 6;
-      
-        cut_index = (estep_base -1 ) * index_p  ;
-        if(cut_index > max_canditate){
-            break;
+        
+        tick_number ++;
+        unflag_index =( step * (6*tick_number - 1) + tick_number )  * 2  - 2 ;
+        
+        if(unflag_index > max_canditate){
+          break;
         
         }
-        numbers[cut_index] = 0;
-      
-        cut_index = (estep_base + 1 ) * index_p  ;
-        if(cut_index > max_canditate){
-      
-            break;
+        numbers[unflag_index] = 0;
         
+        unflag_index =  ( step * (6*tick_number + 1) + tick_number )  * 2  - 1  ;
+        
+        if(unflag_index > max_canditate){
+      
+          break;
+          
         }
-        numbers[cut_index] = 0;
+        numbers[unflag_index] = 0;
+      
+
       }
-      
     }
-  
   }
 }
+
 console.log(sum_primes(10000));
+
 
