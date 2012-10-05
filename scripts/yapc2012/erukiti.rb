@@ -45,7 +45,7 @@ def get_primary(nums)
   result
 end
 
-if __FILE__ == $0
+#if __FILE__ == $0
   puts get_primary(10000).inject(:+)
-end
+#end
 
