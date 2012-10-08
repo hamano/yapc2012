@@ -8,9 +8,10 @@ $| = 1;
 ################################################################################
 
 # process parameter
-my $COUNT = $ARGV[0];
-$COUNT = 10000 if !$COUNT;
-die "give number of prime numbers to sum up!" if $COUNT !~ /^\d+$/;
+#my $COUNT = $ARGV[0];
+#$COUNT = 10000 if !$COUNT;
+my $COUNT = 10000;
+#die "give number of prime numbers to sum up!" if $COUNT !~ /^\d+$/;
 
 # use first 2 primes for seed.
 my @PRIMES=(2, 3);
