@@ -1,51 +1,58 @@
 #! /usr/bin/env ruby
 #coding: utf-8
 
-PARTITION = 5000
+include Math
 
-def get_primary(nums)
-  sleve = []
-  result = [2]
-  nums -= 1
-  primary = 2
-  max = PARTITION
-  while nums > 0
-    n = primary
-    while n < max
-      sleve[n] = true
-      n += primary
+def sieve_fill(sieve, primary, max)
+    n = primary * 7
+    loop do
+      return if n >= max; sieve[n] = true; n += primary * 4
+      return if n >= max; sieve[n] = true; n += primary * 2
+      return if n >= max; sieve[n] = true; n += primary * 4
+      return if n >= max; sieve[n] = true; n += primary * 2
+      return if n >= max; sieve[n] = true; n += primary * 4
+      return if n >= max; sieve[n] = true; n += primary * 6
+      return if n >= max; sieve[n] = true; n += primary * 2
+      return if n >= max; sieve[n] = true; n += primary * 6
     end
+end
 
-    while sleve[primary] && primary < max
-      primary += 1
-    end
+def get_primary_sum(nums)
+  return [2, 3, 5, 7][0...nums].inject(:+) if nums < 5
 
-    if primary >= max
-      index = 0
-      while result[index] ** 2 <= max + PARTITION
-        prim = result[index]
-        n = max / prim * prim
-        while n < max + PARTITION
-          sleve[n] = true
-          n += prim
-        end
-        index += 1
-      end
-      max += PARTITION
+  max = (nums * log(nums) + nums * log(log(nums))).to_i
+  max_sqrt = sqrt(max)
+  sieve = Array.new(max)
+  result = 2 + 3 + 5
+  nums -= 3
+  primary = 7
 
-      while sleve[primary]
-        primary += 1
-      end
-    end
-
-    result << primary
-    nums -= 1
+  loop do
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 4
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 2
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 4
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 2
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 4
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 6
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 2
+    unless sieve[primary] then sieve_fill(sieve, primary, max) if primary < max_sqrt; result += primary; nums -= 1; return result if nums == 0; end; primary += 6
+    break if primary >= max_sqrt
   end
 
-  result
+  loop do
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 4
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 2
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 4
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 2
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 4
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 6
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 2
+    unless sieve[primary] then result += primary; nums -= 1; return result if nums == 0; end; primary += 6
+  end
 end
 
 #if __FILE__ == $0
-  puts get_primary(10000).inject(:+)
+  puts get_primary_sum(10000)
 #end
+
 
