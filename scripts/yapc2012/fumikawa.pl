@@ -20,7 +20,7 @@ my @PRIMES=(2, 3);
 # main function prints the total
 ################################################################################
 main($COUNT);
-exit(0);
+#exit(0);
 
 sub main(){
   my $cnt = shift @_;
