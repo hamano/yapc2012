@@ -1,64 +1,49 @@
-PARTITION = 6000
+// loop unrolling and thru [2, 3, 5] multiple
+// 7, 11, 13, 17, 19, 23, 29, 1
+
+function sieve_fill(primary) {
+  if (primary < max_sqrt) {
+    var n = primary * 7;
+    while (true) {
+      if (n >= max) return; sieve[n] = true; n += primary * 4;
+      if (n >= max) return; sieve[n] = true; n += primary * 2;
+      if (n >= max) return; sieve[n] = true; n += primary * 4;
+      if (n >= max) return; sieve[n] = true; n += primary * 2;
+      if (n >= max) return; sieve[n] = true; n += primary * 4;
+      if (n >= max) return; sieve[n] = true; n += primary * 6;
+      if (n >= max) return; sieve[n] = true; n += primary * 2;
+      if (n >= max) return; sieve[n] = true; n += primary * 6;
+    }
+  }
+}
 
 function get_primary_sum(nums) {
-  var sieve = [];
-  var result = [2, 3];
-  nums -= 2;
-  var primary = 3;
-  var max = PARTITION;
-  var sum = 5;
-
-  while (nums > 0 && primary * primary < max) {
-    var n = primary;
-    while (n < max) {
-      sieve[n] = true;
-      n += primary;
+  if (nums < 5) {
+    switch (nums) {
+    case 0: return 0;
+    case 1: return 2;
+    case 2: return 2 + 3;
+    case 3: return 2 + 3 + 5;
+    case 4: return 2 + 3 + 5 + 7;
     }
-
-    while (sieve[primary]) primary += 2;
-
-    result.push(primary);
-    nums--;
-    sum += primary;
   }
 
-  // fix allignment
-  while (nums > 0) {
-    primary += 2;
-    if (primary % 15 == 1) break;
-
-    while (sieve[primary]) primary += 2;
-
-    result.push(primary);
-    nums--;
-    sum += primary;
-  }
+  max = Math.floor(nums * Math.log(nums) + nums * Math.log(Math.log(nums))); // Pierre Dusart
+  max_sqrt = Math.sqrt(max)
+  sieve = new Buffer(max); sieve.fill(0);
+  var sum = 2 + 3 + 5;
+  nums -= 3;
+  var primary = 7;
 
   while (true) {
-    // loop unrolling & thru [2, 3, 5] multiple
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 6; // +1
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 4; // +7
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 2; // +11
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 4; // +13
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 2; // +17
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 4; // +19
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 6; // +23
-    if (!sieve[primary]) {result.push(primary); nums -= 1; sum += primary; if (nums == 0) break;} primary += 2; // +29
-
-    // extend sieve
-    if (primary >= max) {
-      index = 3; // result[3] => 7
-      while (result[index] * result[index] <= max + PARTITION) {
-        prim = result[index];
-        n = Math.floor(max / prim) * prim;
-        while (n < max+ PARTITION) {
-          sieve[n] = true;
-          n += prim;
-        }
-        index++;
-      }
-      max += PARTITION;
-    }
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 4;
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 2;
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 4;
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 2;
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 4;
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 6;
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 2;
+    if (!sieve[primary]) {sieve_fill(primary); sum += primary; if (--nums == 0) break;} primary += 6;
   }
 
   return sum;
